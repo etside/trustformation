@@ -1,0 +1,69 @@
+<section class="hero hero-animate" id="home">
+  <div class="container hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge" data-animate="fade-up" data-delay="1">
+        <i class="fas fa-circle-check"></i>
+        <span>Trusted</span> Business Formation Partner
+      </div>
+
+      <h1 class="hero-title" data-animate="fade-up" data-delay="2">
+        <%= (settings.hero_headline || 'Launch Your Business Globally with Confidence').replace(/business|global/gi, (match) => '<span class="highlight">' + match + '</span>') %>
+      </h1>
+
+      <p class="hero-sub" data-animate="fade-up" data-delay="3">
+        <%= settings.hero_subheadline || 'We handle company registration, compliance, and formation across the USA, UK, Canada, and Bangladesh — so you can focus on growing your business.' %>
+      </p>
+
+      <div class="hero-actions" data-animate="fade-up" data-delay="4">
+        <a href="#contact" class="btn btn-accent">
+          <%= settings.hero_cta_text || 'Get Started Today' %>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+        <a href="#services" class="btn btn-outline">
+          <%= settings.hero_cta_secondary || 'View Services' %>
+        </a>
+      </div>
+
+      <div class="hero-stats" data-animate="fade-up" data-delay="5">
+        <div class="stat-item">
+          <span class="stat-value"><%= settings.stat1_value || '5,000+' %></span>
+          <span class="stat-label"><%= settings.stat1_label || 'Happy Clients' %></span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value"><%= settings.stat2_value || '50+' %></span>
+          <span class="stat-label"><%= settings.stat2_label || 'Countries' %></span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value"><%= settings.stat3_value || '10+ Years' %></span>
+          <span class="stat-label"><%= settings.stat3_label || 'Experience' %></span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value"><%= settings.stat4_value || '99.8%' %></span>
+          <span class="stat-label"><%= settings.stat4_label || 'Success Rate' %></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-globe" data-animate="scale-in">
+        <i class="fas fa-earth-americas hero-globe-icon"></i>
+      </div>
+
+      <div class="hero-float-badge left" data-animate="fade-left" data-delay="6">
+        <i class="fas fa-quote-left"></i>
+        <div>
+          <div class="stars">★★★★★</div>
+          <div class="sub">Highly Recommended</div>
+        </div>
+      </div>
+
+      <div class="hero-float-badge right" data-animate="fade-right" data-delay="7">
+        <i class="fas fa-briefcase"></i>
+        <div>
+          <div style="font-size:1rem;font-weight:800;color:#fff">10+ Years</div>
+          <div class="sub">Experience</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

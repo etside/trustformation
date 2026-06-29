@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Trust Formation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+  <nav class="admin-nav">
+    <div class="admin-nav-inner">
+      <a href="/admin" class="admin-brand">
+        <img src="<%= settings.logo_light || '/trust-white-logo.png' %>" alt="Logo" class="admin-nav-logo">
+        <span>Admin Panel</span>
+      </a>
+      <div class="admin-nav-right">
+        <a href="/" target="_blank" class="btn btn-sm btn-outline"><i class="fas fa-external-link-alt"></i> View Site</a>
+        <a href="/admin/logout" class="btn btn-sm btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="admin-container">
+    <div class="admin-tabs">
+      <a href="/admin?tab=settings" class="tab-btn <%= tab === 'settings' ? 'active' : '' %>"><i class="fas fa-cog"></i> Settings</a>
+      <a href="/admin?tab=services" class="tab-btn <%= tab === 'services' ? 'active' : '' %>"><i class="fas fa-briefcase"></i> Services</a>
+      <a href="/admin?tab=pricing" class="tab-btn <%= tab === 'pricing' ? 'active' : '' %>"><i class="fas fa-tags"></i> Pricing</a>
+      <a href="/admin?tab=faqs" class="tab-btn <%= tab === 'faqs' ? 'active' : '' %>"><i class="fas fa-question-circle"></i> FAQs</a>
+      <a href="/admin?tab=testimonials" class="tab-btn <%= tab === 'testimonials' ? 'active' : '' %>"><i class="fas fa-star"></i> Testimonials</a>
+      <a href="/admin?tab=whyus" class="tab-btn <%= tab === 'whyus' ? 'active' : '' %>"><i class="fas fa-shield-halved"></i> Why Us</a>
+      <a href="/admin?tab=logos" class="tab-btn <%= tab === 'logos' ? 'active' : '' %>"><i class="fas fa-images"></i> Logos</a>
+      <a href="/admin?tab=submissions" class="tab-btn <%= tab === 'submissions' ? 'active' : '' %>"><i class="fas fa-envelope"></i> Submissions</a>
+    </div>
+
+    <div class="admin-content">
+      <!-- SETTINGS -->
+      <% if (tab === 'settings') { %>
+      <div class="card">
+        <h2><i class="fas fa-palette"></i> Brand Colors</h2>
+        <form action="/admin/api/update-settings" method="POST">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Primary Color</label>
+              <div class="color-input">
+                <input type="color" name="primary_color" value="<%= settings.primary_color || '#0D1B2A' %>">
+                <input type="text" name="primary_color" value="<%= settings.primary_color || '#0D1B2A' %>" class="color-hex">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Accent Color</label>
+              <div class="color-input">
+                <input type="color" name="accent_color" value="<%= settings.accent_color || '#E8963E' %>">
+                <input type="text" name="accent_color" value="<%= settings.accent_color || '#E8963E' %>" class="color-hex">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Background Color</label>
+              <div class="color-input">
+                <input type="color" name="bg_color" value="<%= settings.bg_color || '#0A0F1C' %>">
+                <input type="text" name="bg_color" value="<%= settings.bg_color || '#0A0F1C' %>" class="color-hex">
+              </div>
+            </div>
+          </div>
+
+          <h2><i class="fas fa-image"></i> Logo</h2>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Light Logo (for dark backgrounds)</label>
+              <div class="preview-box"><img src="<%= settings.logo_light || '/trust-white-logo.png' %>" alt="Light Logo" class="preview-img"></div>
+            </div>
+            <div class="form-group">
+              <label>Dark Logo (for light backgrounds)</label>
+              <div class="preview-box"><img src="<%= settings.logo_dark || '/trust-black-logo.png' %>" alt="Dark Logo" class="preview-img"></div>
+            </div>
+          </div>
+        </form>
+        <form action="/admin/api/upload" method="POST" enctype="multipart/form-data" class="inline-form">
+          <input type="hidden" name="field" value="logo_light">
+          <div class="form-group">
+            <label>Upload Light Logo</label>
+            <input type="file" name="file" accept="image/*">
+          </div>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-upload"></i> Upload Light Logo</button>
+        </form>
+        <form action="/admin/api/upload" method="POST" enctype="multipart/form-data" class="inline-form" style="margin-top:0.5rem;">
+          <input type="hidden" name="field" value="logo_dark">
+          <div class="form-group">
+            <label>Upload Dark Logo</label>
+            <input type="file" name="file" accept="image/*">
+          </div>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-upload"></i> Upload Dark Logo</button>
+        </form>
+
+        <form action="/admin/api/update-settings" method="POST">
+          <h2><i class="fas fa-heading"></i> Hero Content</h2>
+          <div class="form-group"><label>Headline</label><input type="text" name="hero_headline" value="<%= settings.hero_headline || '' %>"></div>
+          <div class="form-group"><label>Subheadline</label><input type="text" name="hero_subheadline" value="<%= settings.hero_subheadline || '' %>"></div>
+          <div class="form-row">
+            <div class="form-group"><label>Primary CTA Text</label><input type="text" name="hero_cta_text" value="<%= settings.hero_cta_text || '' %>"></div>
+            <div class="form-group"><label>Secondary CTA Text</label><input type="text" name="hero_cta_secondary" value="<%= settings.hero_cta_secondary || '' %>"></div>
+          </div>
+
+          <h2><i class="fas fa-chart-bar"></i> Stats</h2>
+          <div class="form-row">
+            <div class="form-group"><label>Stat 1 Label</label><input type="text" name="stat1_label" value="<%= settings.stat1_label || '' %>"><label>Value</label><input type="text" name="stat1_value" value="<%= settings.stat1_value || '' %>"></div>
+            <div class="form-group"><label>Stat 2 Label</label><input type="text" name="stat2_label" value="<%= settings.stat2_label || '' %>"><label>Value</label><input type="text" name="stat2_value" value="<%= settings.stat2_value || '' %>"></div>
+            <div class="form-group"><label>Stat 3 Label</label><input type="text" name="stat3_label" value="<%= settings.stat3_label || '' %>"><label>Value</label><input type="text" name="stat3_value" value="<%= settings.stat3_value || '' %>"></div>
+            <div class="form-group"><label>Stat 4 Label</label><input type="text" name="stat4_label" value="<%= settings.stat4_label || '' %>"><label>Value</label><input type="text" name="stat4_value" value="<%= settings.stat4_value || '' %>"></div>
+          </div>
+
+          <h2><i class="fas fa-phone"></i> Contact Info</h2>
+          <div class="form-row">
+            <div class="form-group"><label>Phone</label><input type="text" name="phone" value="<%= settings.phone || '' %>"></div>
+            <div class="form-group"><label>Email</label><input type="email" name="email" value="<%= settings.email || '' %>"></div>
+            <div class="form-group"><label>Address</label><input type="text" name="address" value="<%= settings.address || '' %>"></div>
+          </div>
+
+          <h2><i class="fas fa-link"></i> Social Links</h2>
+          <div class="form-row">
+            <div class="form-group"><label><i class="fab fa-facebook"></i> Facebook</label><input type="url" name="facebook_url" value="<%= settings.facebook_url || '' %>"></div>
+            <div class="form-group"><label><i class="fab fa-linkedin"></i> LinkedIn</label><input type="url" name="linkedin_url" value="<%= settings.linkedin_url || '' %>"></div>
+            <div class="form-group"><label><i class="fab fa-whatsapp"></i> WhatsApp</label><input type="url" name="whatsapp_url" value="<%= settings.whatsapp_url || '' %>"></div>
+            <div class="form-group"><label><i class="fab fa-x-twitter"></i> Twitter</label><input type="url" name="twitter_url" value="<%= settings.twitter_url || '' %>"></div>
+          </div>
+
+          <h2><i class="fas fa-file-alt"></i> Content</h2>
+          <div class="form-group"><label>About Text</label><textarea name="about_text" rows="3"><%= settings.about_text || '' %></textarea></div>
+          <div class="form-group"><label>Services Description</label><textarea name="services_desc" rows="2"><%= settings.services_desc || '' %></textarea></div>
+          <div class="form-group"><label>CTA Headline</label><input type="text" name="cta_headline" value="<%= settings.cta_headline || '' %>"></div>
+          <div class="form-group"><label>CTA Subheadline</label><input type="text" name="cta_subheadline" value="<%= settings.cta_subheadline || '' %>"></div>
+          <div class="form-group"><label>CTA Button Text</label><input type="text" name="cta_button_text" value="<%= settings.cta_button_text || '' %>"></div>
+
+          <h2><i class="fas fa-list-ol"></i> Process Steps</h2>
+          <div class="form-row">
+            <div class="form-group"><label>Step 1 Title</label><input type="text" name="process_step1_title" value="<%= settings.process_step1_title || '' %>"><label>Description</label><input type="text" name="process_step1_desc" value="<%= settings.process_step1_desc || '' %>"></div>
+            <div class="form-group"><label>Step 2 Title</label><input type="text" name="process_step2_title" value="<%= settings.process_step2_title || '' %>"><label>Description</label><input type="text" name="process_step2_desc" value="<%= settings.process_step2_desc || '' %>"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Step 3 Title</label><input type="text" name="process_step3_title" value="<%= settings.process_step3_title || '' %>"><label>Description</label><input type="text" name="process_step3_desc" value="<%= settings.process_step3_desc || '' %>"></div>
+            <div class="form-group"><label>Step 4 Title</label><input type="text" name="process_step4_title" value="<%= settings.process_step4_title || '' %>"><label>Description</label><input type="text" name="process_step4_desc" value="<%= settings.process_step4_desc || '' %>"></div>
+          </div>
+
+          <h2><i class="fas fa-file-alt"></i> Footer</h2>
+          <div class="form-group"><label>Copyright Text</label><input type="text" name="footer_text" value="<%= settings.footer_text || '' %>"></div>
+          <div class="form-group"><label>Site Name</label><input type="text" name="site_name" value="<%= settings.site_name || '' %>"></div>
+
+          <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Save All Settings</button>
+        </form>
+      </div>
+
+      <!-- SERVICES -->
+      <% } else if (tab === 'services') { %>
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fas fa-briefcase"></i> Manage Services</h2>
+          <button class="btn btn-accent" onclick="document.getElementById('addServiceForm').style.display='block'"><i class="fas fa-plus"></i> Add Service</button>
+        </div>
+        <div id="addServiceForm" style="display:none;" class="add-form">
+          <form action="/admin/api/services/add" method="POST">
+            <div class="form-row">
+              <div class="form-group"><label>Title</label><input type="text" name="title" required placeholder="Service title"></div>
+              <div class="form-group"><label>Icon (FA class)</label><input type="text" name="icon" value="fa-building"></div>
+              <div class="form-group"><label>Flag Emoji</label><input type="text" name="flag" placeholder="🇺🇸"></div>
+            </div>
+            <div class="form-group"><label>Short Description</label><textarea name="description" rows="2"></textarea></div>
+            <div class="form-group"><label>Detailed Description</label><textarea name="detailed_description" rows="3"></textarea></div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+              <button type="button" class="btn btn-outline" onclick="this.closest('.add-form').style.display='none'">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <div class="services-list" id="servicesList">
+          <% services.forEach(function(s) { %>
+          <div class="list-item" data-id="<%= s.id %>">
+            <div class="list-item-drag"><i class="fas fa-grip-vertical"></i></div>
+            <div class="list-item-icon"><i class="fas <%= s.icon %>"></i></div>
+            <div class="list-item-content">
+              <strong><%= s.flag %> <%= s.title %></strong>
+              <small><%= s.description %></small>
+            </div>
+            <div class="list-item-actions">
+              <button class="btn btn-sm btn-outline" onclick="editService(<%= JSON.stringify(s).replace(/"/g, '&quot;') %>)"><i class="fas fa-edit"></i></button>
+              <form action="/admin/api/services/delete" method="POST" class="inline-form" onsubmit="return confirm('Delete this service?')">
+                <input type="hidden" name="id" value="<%= s.id %>">
+                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+              </form>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+      <div id="editServiceModal" class="modal" style="display:none;">
+        <div class="modal-content">
+          <div class="modal-header"><h3>Edit Service</h3><button class="modal-close" onclick="closeModal('editServiceModal')">&times;</button></div>
+          <form action="/admin/api/services/edit" method="POST">
+            <input type="hidden" name="id" id="editServiceId">
+            <div class="form-group"><label>Title</label><input type="text" name="title" id="editServiceTitle" required></div>
+            <div class="form-row">
+              <div class="form-group"><label>Icon</label><input type="text" name="icon" id="editServiceIcon"></div>
+              <div class="form-group"><label>Flag</label><input type="text" name="flag" id="editServiceFlag"></div>
+            </div>
+            <div class="form-group"><label>Description</label><textarea name="description" id="editServiceDesc" rows="2"></textarea></div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- PRICING -->
+      <% } else if (tab === 'pricing') { %>
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fas fa-tags"></i> Pricing Packages</h2>
+          <button class="btn btn-accent" onclick="document.getElementById('addPricingForm').style.display='block'"><i class="fas fa-plus"></i> Add Package</button>
+        </div>
+        <div id="addPricingForm" style="display:none;" class="add-form">
+          <form action="/admin/api/pricing/add" method="POST">
+            <div class="form-row">
+              <div class="form-group"><label>Country</label><select name="country"><option value="USA">USA</option><option value="UK">UK</option><option value="Canada">Canada</option><option value="Bangladesh">Bangladesh</option></select></div>
+              <div class="form-group"><label>Tier</label><select name="tier"><option value="Basic">Basic</option><option value="Growth">Growth</option><option value="Standard">Standard</option><option value="Premium">Premium</option><option value="Elite">Elite</option></select></div>
+              <div class="form-group"><label>Name</label><input type="text" name="name" required placeholder="Package name"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Price</label><input type="text" name="price" required placeholder="$199"></div>
+              <div class="form-group"><label>Original Price</label><input type="text" name="original_price" placeholder="$249"></div>
+              <div class="form-group"><label>Currency</label><select name="currency"><option value="USD">USD</option><option value="GBP">GBP</option><option value="BDT">BDT</option><option value="CAD">CAD</option></select></div>
+            </div>
+            <div class="form-group"><label>Tagline</label><input type="text" name="tagline" placeholder="Start Compliant"></div>
+            <div class="form-group"><label>Features (JSON array)</label><textarea name="features" rows="3" placeholder='["Feature 1", "Feature 2"]'>[]</textarea></div>
+            <div class="form-group"><label><input type="checkbox" name="is_popular" value="1"> Mark as Popular</label></div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+              <button type="button" class="btn btn-outline" onclick="this.closest('.add-form').style.display='none'">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <div class="services-list">
+          <% pricingPackages.forEach(function(p) { %>
+          <div class="list-item">
+            <div class="list-item-icon"><i class="fas fa-tag"></i></div>
+            <div class="list-item-content">
+              <strong><%= p.country %> — <%= p.name %> (<%= p.tier %>)</strong>
+              <small><%= p.price %> <% if (p.original_price) { %><s><%= p.original_price %></s><% } %> <%= p.is_popular ? '⭐ Popular' : '' %></small>
+            </div>
+            <div class="list-item-actions">
+              <button class="btn btn-sm btn-outline" onclick="editPricing(<%= JSON.stringify(p).replace(/"/g, '&quot;') %>)"><i class="fas fa-edit"></i></button>
+              <form action="/admin/api/pricing/delete" method="POST" class="inline-form" onsubmit="return confirm('Delete?')">
+                <input type="hidden" name="id" value="<%= p.id %>">
+                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+              </form>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+      <div id="editPricingModal" class="modal" style="display:none;">
+        <div class="modal-content">
+          <div class="modal-header"><h3>Edit Package</h3><button class="modal-close" onclick="closeModal('editPricingModal')">&times;</button></div>
+          <form action="/admin/api/pricing/edit" method="POST">
+            <input type="hidden" name="id" id="editPricingId">
+            <div class="form-row">
+              <div class="form-group"><label>Country</label><select name="country" id="editPricingCountry"><option value="USA">USA</option><option value="UK">UK</option><option value="Canada">Canada</option><option value="Bangladesh">Bangladesh</option></select></div>
+              <div class="form-group"><label>Name</label><input type="text" name="name" id="editPricingName" required></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Price</label><input type="text" name="price" id="editPricingPrice" required></div>
+              <div class="form-group"><label>Original Price</label><input type="text" name="original_price" id="editPricingOrigPrice"></div>
+            </div>
+            <div class="form-group"><label>Features (JSON)</label><textarea name="features" id="editPricingFeatures" rows="3"></textarea></div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- FAQs -->
+      <% } else if (tab === 'faqs') { %>
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fas fa-question-circle"></i> FAQs</h2>
+          <button class="btn btn-accent" onclick="document.getElementById('addFaqForm').style.display='block'"><i class="fas fa-plus"></i> Add FAQ</button>
+        </div>
+        <div id="addFaqForm" style="display:none;" class="add-form">
+          <form action="/admin/api/faqs/add" method="POST">
+            <div class="form-group"><label>Question</label><input type="text" name="question" required placeholder="Your question here"></div>
+            <div class="form-group"><label>Answer</label><textarea name="answer" rows="4" required placeholder="Detailed answer..."></textarea></div>
+            <div class="form-group"><label>Category</label><select name="category"><option value="general">General</option><option value="usa">USA</option><option value="uk">UK</option><option value="canada">Canada</option><option value="bangladesh">Bangladesh</option><option value="services">Services</option></select></div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+              <button type="button" class="btn btn-outline" onclick="this.closest('.add-form').style.display='none'">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <div class="services-list">
+          <% faqs.forEach(function(f) { %>
+          <div class="list-item">
+            <div class="list-item-icon"><i class="fas fa-question"></i></div>
+            <div class="list-item-content">
+              <strong><%= f.question %></strong>
+              <small>[<%= f.category %>] <%= f.answer.substring(0, 80) %>...</small>
+            </div>
+            <div class="list-item-actions">
+              <button class="btn btn-sm btn-outline" onclick="editFaq(<%= JSON.stringify(f).replace(/"/g, '&quot;') %>)"><i class="fas fa-edit"></i></button>
+              <form action="/admin/api/faqs/delete" method="POST" class="inline-form" onsubmit="return confirm('Delete?')">
+                <input type="hidden" name="id" value="<%= f.id %>">
+                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+              </form>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+      <div id="editFaqModal" class="modal" style="display:none;">
+        <div class="modal-content">
+          <div class="modal-header"><h3>Edit FAQ</h3><button class="modal-close" onclick="closeModal('editFaqModal')">&times;</button></div>
+          <form action="/admin/api/faqs/edit" method="POST">
+            <input type="hidden" name="id" id="editFaqId">
+            <div class="form-group"><label>Question</label><input type="text" name="question" id="editFaqQuestion" required></div>
+            <div class="form-group"><label>Answer</label><textarea name="answer" id="editFaqAnswer" rows="4"></textarea></div>
+            <div class="form-group"><label>Category</label><select name="category" id="editFaqCategory"><option value="general">General</option><option value="usa">USA</option><option value="uk">UK</option><option value="canada">Canada</option><option value="bangladesh">Bangladesh</option><option value="services">Services</option></select></div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- TESTIMONIALS -->
+      <% } else if (tab === 'testimonials') { %>
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fas fa-star"></i> Testimonials</h2>
+          <button class="btn btn-accent" onclick="document.getElementById('addTestimonialForm').style.display='block'"><i class="fas fa-plus"></i> Add</button>
+        </div>
+        <div id="addTestimonialForm" style="display:none;" class="add-form">
+          <form action="/admin/api/testimonials/add" method="POST">
+            <div class="form-row">
+              <div class="form-group"><label>Name</label><input type="text" name="name" required></div>
+              <div class="form-group"><label>Role</label><input type="text" name="role" placeholder="Founder & CEO"></div>
+              <div class="form-group"><label>Company</label><input type="text" name="company" placeholder="Company Name"></div>
+            </div>
+            <div class="form-group"><label>Quote</label><textarea name="quote" rows="3" required placeholder="What they said..."></textarea></div>
+            <div class="form-row">
+              <div class="form-group"><label>Rating (1-5)</label><input type="number" name="rating" value="5" min="1" max="5"></div>
+              <div class="form-group"><label>Video URL (optional)</label><input type="url" name="video_url" placeholder="https://youtube.com/..."></div>
+              <div class="form-group"><label><input type="checkbox" name="is_featured" value="1"> Featured</label></div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+              <button type="button" class="btn btn-outline" onclick="this.closest('.add-form').style.display='none'">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <div class="services-list">
+          <% testimonials.forEach(function(t) { %>
+          <div class="list-item">
+            <div class="list-item-icon"><i class="fas fa-user"></i></div>
+            <div class="list-item-content">
+              <strong><%= t.name %> — <%= t.company %></strong>
+              <small>"<%= t.quote.substring(0, 60) %>..." | <%= t.rating %>★ <%= t.is_featured ? '| Featured' : '' %></small>
+            </div>
+            <div class="list-item-actions">
+              <button class="btn btn-sm btn-outline" onclick="editTestimonial(<%= JSON.stringify(t).replace(/"/g, '&quot;') %>)"><i class="fas fa-edit"></i></button>
+              <form action="/admin/api/testimonials/delete" method="POST" class="inline-form" onsubmit="return confirm('Delete?')">
+                <input type="hidden" name="id" value="<%= t.id %>">
+                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+              </form>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+      <div id="editTestimonialModal" class="modal" style="display:none;">
+        <div class="modal-content">
+          <div class="modal-header"><h3>Edit Testimonial</h3><button class="modal-close" onclick="closeModal('editTestimonialModal')">&times;</button></div>
+          <form action="/admin/api/testimonials/edit" method="POST">
+            <input type="hidden" name="id" id="editTestId">
+            <div class="form-row">
+              <div class="form-group"><label>Name</label><input type="text" name="name" id="editTestName" required></div>
+              <div class="form-group"><label>Role</label><input type="text" name="role" id="editTestRole"></div>
+              <div class="form-group"><label>Company</label><input type="text" name="company" id="editTestCompany"></div>
+            </div>
+            <div class="form-group"><label>Quote</label><textarea name="quote" id="editTestQuote" rows="3"></textarea></div>
+            <div class="form-row">
+              <div class="form-group"><label>Rating</label><input type="number" name="rating" id="editTestRating" min="1" max="5"></div>
+              <div class="form-group"><label>Video URL</label><input type="url" name="video_url" id="editTestVideo"></div>
+              <div class="form-group"><label><input type="checkbox" name="is_featured" value="1" id="editTestFeatured"> Featured</label></div>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- WHY US -->
+      <% } else if (tab === 'whyus') { %>
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fas fa-shield-halved"></i> Why Choose Us</h2>
+          <button class="btn btn-accent" onclick="document.getElementById('addWhyusForm').style.display='block'"><i class="fas fa-plus"></i> Add Item</button>
+        </div>
+        <div id="addWhyusForm" style="display:none;" class="add-form">
+          <form action="/admin/api/whyus/add" method="POST">
+            <div class="form-row">
+              <div class="form-group"><label>Title</label><input type="text" name="title" required></div>
+              <div class="form-group"><label>Icon (FA class)</label><input type="text" name="icon" value="fa-star"></div>
+            </div>
+            <div class="form-group"><label>Description</label><textarea name="description" rows="2"></textarea></div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+              <button type="button" class="btn btn-outline" onclick="this.closest('.add-form').style.display='none'">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <div class="services-list">
+          <% whyus.forEach(function(w) { %>
+          <div class="list-item">
+            <div class="list-item-icon"><i class="fas <%= w.icon %>"></i></div>
+            <div class="list-item-content">
+              <strong><%= w.title %></strong>
+              <small><%= w.description %></small>
+            </div>
+            <div class="list-item-actions">
+              <button class="btn btn-sm btn-outline" onclick="editWhyus(<%= JSON.stringify(w).replace(/"/g, '&quot;') %>)"><i class="fas fa-edit"></i></button>
+              <form action="/admin/api/whyus/delete" method="POST" class="inline-form" onsubmit="return confirm('Delete?')">
+                <input type="hidden" name="id" value="<%= w.id %>">
+                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+              </form>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+      <div id="editWhyusModal" class="modal" style="display:none;">
+        <div class="modal-content">
+          <div class="modal-header"><h3>Edit Item</h3><button class="modal-close" onclick="closeModal('editWhyusModal')">&times;</button></div>
+          <form action="/admin/api/whyus/edit" method="POST">
+            <input type="hidden" name="id" id="editWhyusId">
+            <div class="form-group"><label>Title</label><input type="text" name="title" id="editWhyusTitle" required></div>
+            <div class="form-group"><label>Icon</label><input type="text" name="icon" id="editWhyusIcon"></div>
+            <div class="form-group"><label>Description</label><textarea name="description" id="editWhyusDesc" rows="2"></textarea></div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- CLIENT LOGOS -->
+      <% } else if (tab === 'logos') { %>
+      <div class="card">
+        <div class="card-header">
+          <h2><i class="fas fa-images"></i> Client Logos</h2>
+          <button class="btn btn-accent" onclick="document.getElementById('addLogoForm').style.display='block'"><i class="fas fa-plus"></i> Add Logo</button>
+        </div>
+        <div id="addLogoForm" style="display:none;" class="add-form">
+          <form action="/admin/api/logos/add" method="POST">
+            <div class="form-row">
+              <div class="form-group"><label>Name</label><input type="text" name="name" required placeholder="Company name"></div>
+              <div class="form-group"><label>Logo URL</label><input type="url" name="logo_url" required placeholder="https://... or /client-logos/..."></div>
+              <div class="form-group"><label>Website URL</label><input type="url" name="website_url" placeholder="https://..."></div>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+              <button type="button" class="btn btn-outline" onclick="this.closest('.add-form').style.display='none'">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <div class="services-list">
+          <% clientLogos.forEach(function(l) { %>
+          <div class="list-item">
+            <div class="list-item-icon"><i class="fas fa-image"></i></div>
+            <div class="list-item-content">
+              <strong><%= l.name %></strong>
+              <small><%= l.logo_url %> <%= l.website_url ? '| ' + l.website_url : '' %></small>
+            </div>
+            <div class="list-item-actions">
+              <button class="btn btn-sm btn-outline" onclick="editLogo(<%= JSON.stringify(l).replace(/"/g, '&quot;') %>)"><i class="fas fa-edit"></i></button>
+              <form action="/admin/api/logos/delete" method="POST" class="inline-form" onsubmit="return confirm('Delete?')">
+                <input type="hidden" name="id" value="<%= l.id %>">
+                <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+              </form>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+      <div id="editLogoModal" class="modal" style="display:none;">
+        <div class="modal-content">
+          <div class="modal-header"><h3>Edit Logo</h3><button class="modal-close" onclick="closeModal('editLogoModal')">&times;</button></div>
+          <form action="/admin/api/logos/edit" method="POST">
+            <input type="hidden" name="id" id="editLogoId">
+            <div class="form-group"><label>Name</label><input type="text" name="name" id="editLogoName" required></div>
+            <div class="form-group"><label>Logo URL</label><input type="url" name="logo_url" id="editLogoUrl" required></div>
+            <div class="form-group"><label>Website URL</label><input type="url" name="website_url" id="editLogoWebsite"></div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- SUBMISSIONS -->
+      <% } else if (tab === 'submissions') { %>
+      <div class="card">
+        <h2><i class="fas fa-envelope"></i> Contact Form Submissions</h2>
+        <% if (submissions.length === 0) { %>
+          <p class="empty-state">No submissions yet.</p>
+        <% } else { %>
+          <div class="submissions-list">
+            <% submissions.forEach(function(s) { %>
+            <div class="submission-item <%= s.is_read ? 'read' : '' %>">
+              <div class="submission-header">
+                <strong><%= s.name %></strong>
+                <span class="submission-email"><%= s.email %></span>
+                <% if (s.service_interest) { %><span class="badge"><%= s.service_interest %></span><% } %>
+                <span class="submission-date"><%= s.created_at %></span>
+              </div>
+              <% if (s.phone) { %><p class="submission-phone"><i class="fas fa-phone"></i> <%= s.phone %></p><% } %>
+              <p class="submission-msg"><%= s.message %></p>
+              <div class="submission-actions">
+                <% if (!s.is_read) { %>
+                <form action="/admin/api/submissions/read" method="POST" class="inline-form">
+                  <input type="hidden" name="id" value="<%= s.id %>">
+                  <button type="submit" class="btn btn-sm btn-outline"><i class="fas fa-check"></i> Mark Read</button>
+                </form>
+                <% } %>
+                <form action="/admin/api/submissions/delete" method="POST" class="inline-form" onsubmit="return confirm('Delete?')">
+                  <input type="hidden" name="id" value="<%= s.id %>">
+                  <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                </form>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+        <% } %>
+      </div>
+      <% } %>
+    </div>
+  </div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

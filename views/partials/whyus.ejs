@@ -1,0 +1,21 @@
+<section id="whyus" class="whyus-section section">
+  <div class="container">
+    <span class="section-label" data-animate="fade-up" data-delay="1">Our Advantages</span>
+    <h2 class="section-title" data-animate="fade-up" data-delay="2">Why Choose <span class="highlight">Trust Formation</span></h2>
+    <p class="section-subtitle" data-animate="fade-up" data-delay="3">What makes us the preferred choice for business formation worldwide.</p>
+
+    <div class="whyus-grid" data-animate="fade-up" data-delay="4">
+      <% whyus.forEach(function(w, i) { %>
+        <div class="whyus-card" data-animate="fade-up" data-delay="<%= Math.min(i + 5, 10) %>">
+          <div class="whyus-icon">
+            <i class="fas <%= w.icon %>"></i>
+          </div>
+          <div>
+            <h3><%= w.title %></h3>
+            <p><%= w.description %></p>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>

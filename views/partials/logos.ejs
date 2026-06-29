@@ -1,0 +1,23 @@
+<section class="logos-section">
+  <div class="container">
+    <div style="overflow:hidden;">
+      <div class="logos-track" data-animate="fade-up">
+        <% if (clientLogos && clientLogos.length > 0) { %>
+          <% clientLogos.forEach(function(logo) { %>
+            <a href="<%= logo.website_url || '#' %>" target="_blank" rel="noopener">
+              <img src="<%= logo.logo_url %>" alt="<%= logo.name %>">
+            </a>
+          <% }); %>
+          <% clientLogos.forEach(function(logo) { %>
+            <a href="<%= logo.website_url || '#' %>" target="_blank" rel="noopener">
+              <img src="<%= logo.logo_url %>" alt="<%= logo.name %>">
+            </a>
+          <% }); %>
+        <% } else { %>
+          <span style="color:var(--text-muted);font-size:0.9rem;white-space:nowrap">Wise &nbsp;&nbsp;&nbsp; Payoneer &nbsp;&nbsp;&nbsp; Stripe &nbsp;&nbsp;&nbsp; PayPal &nbsp;&nbsp;&nbsp; Amazon</span>
+          <span style="color:var(--text-muted);font-size:0.9rem;white-space:nowrap">Wise &nbsp;&nbsp;&nbsp; Payoneer &nbsp;&nbsp;&nbsp; Stripe &nbsp;&nbsp;&nbsp; PayPal &nbsp;&nbsp;&nbsp; Amazon</span>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>

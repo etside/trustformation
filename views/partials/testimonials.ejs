@@ -1,0 +1,34 @@
+<section class="testimonials-section section">
+  <div class="container">
+    <div style="text-align:center;" data-animate="fade-up">
+      <span class="section-label">Testimonials</span>
+      <h2 class="section-title">What Our <span class="highlight">Clients</span> Say</h2>
+      <p class="section-subtitle" style="margin:0 auto;">Real stories from entrepreneurs who trusted us with their business formation.</p>
+    </div>
+
+    <% if (testimonials && testimonials.length > 0) { %>
+      <div class="testimonials-grid">
+        <% testimonials.forEach(function(t, i) { %>
+          <div class="testimonial-card" data-animate="fade-up" data-delay="<%= Math.min(i + 2, 8) %>">
+            <div class="testimonial-stars">
+              <% for (var r = 0; r < t.rating; r++) { %><i class="fas fa-star"></i><% } %>
+              <% for (var r = t.rating; r < 5; r++) { %><i class="far fa-star"></i><% } %>
+            </div>
+            <p class="testimonial-quote">"<%= t.quote %>"</p>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">
+                <%= t.name.charAt(0) %>
+              </div>
+              <div class="testimonial-info">
+                <h4><%= t.name %></h4>
+                <p><%= t.role %><%= t.company ? ', ' + t.company : '' %></p>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <p style="text-align:center;color:var(--text-muted);margin-top:2rem;">Testimonials coming soon.</p>
+    <% } %>
+  </div>
+</section>

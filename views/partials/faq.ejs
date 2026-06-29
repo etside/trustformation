@@ -1,0 +1,27 @@
+<section id="faq" class="faq-section section">
+  <div class="container">
+    <div style="text-align:center;" data-animate="fade-up">
+      <span class="section-label">FAQ</span>
+      <h2 class="section-title">Frequently Asked <span class="highlight">Questions</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">Everything you need to know about our formation services.</p>
+    </div>
+
+    <% if (faqs && faqs.length > 0) { %>
+      <div class="faq-grid">
+        <% faqs.forEach(function(faq, i) { %>
+          <div class="faq-item" data-animate="fade-up" data-delay="<%= Math.min(i + 1, 8) %>">
+            <button class="faq-question" onclick="toggleFaq(this)">
+              <span><%= faq.question %></span>
+              <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner"><%= faq.answer %></div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <p style="text-align:center;color:var(--text-muted);margin-top:2rem;">FAQs coming soon.</p>
+    <% } %>
+  </div>
+</section>

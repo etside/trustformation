@@ -1,0 +1,64 @@
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid" data-animate="fade-up">
+      <div class="footer-brand">
+        <img src="<%= settings.logo_light || '/trust-white-logo.png' %>" alt="Trust Formation" style="height:40px;">
+        <p><%= settings.about_text || 'Trust Formation is a leading corporate service provider specializing in international business formation across the USA, UK, Canada, and Bangladesh.' %></p>
+        <div class="footer-social">
+          <% if (settings.facebook_url) { %>
+            <a href="<%= settings.facebook_url %>" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <% } %>
+          <% if (settings.linkedin_url) { %>
+            <a href="<%= settings.linkedin_url %>" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <% } %>
+          <% if (settings.twitter_url) { %>
+            <a href="<%= settings.twitter_url %>" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+          <% } %>
+          <% if (settings.whatsapp_url) { %>
+            <a href="<%= settings.whatsapp_url %>" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <a href="#services">USA LLC Formation</a>
+        <a href="#services">UK Ltd Registration</a>
+        <a href="#services">Canada Company Formation</a>
+        <a href="#services">Bangladesh Registration</a>
+        <a href="#services">Apostille Services</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#whyus">About Us</a>
+        <a href="#whyus">Why Choose Us</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="tel:<%= settings.phone || '+19177189718' %>"><i class="fas fa-phone" style="margin-right:0.5rem;"></i><%= settings.phone || '+1 (917) 718-9718' %></a>
+        <a href="mailto:<%= settings.email || 'info@trustformation.net' %>"><i class="fas fa-envelope" style="margin-right:0.5rem;"></i><%= settings.email || 'info@trustformation.net' %></a>
+        <% if (settings.address) { %>
+          <a href="#"><i class="fas fa-location-dot" style="margin-right:0.5rem;"></i><%= settings.address %></a>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p><%= settings.footer_text || '© ' + new Date().getFullYear() + ' Trust Formation. All rights reserved.' %></p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Refund Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
+  <i class="fas fa-arrow-up"></i>
+</button>

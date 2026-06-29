@@ -1,0 +1,78 @@
+<section id="contact" class="contact-section section">
+  <div class="container">
+    <span class="section-label" data-animate="fade-up" data-delay="1">Get In Touch</span>
+    <h2 class="section-title" data-animate="fade-up" data-delay="2">Let's <span class="highlight">Connect</span></h2>
+    <p class="section-subtitle" data-animate="fade-up" data-delay="3">Ready to start your business journey? Reach out and we'll get back to you within 24 hours.</p>
+
+    <div class="contact-grid">
+      <div class="contact-info" data-animate="fade-left" data-delay="4">
+        <p class="contact-info-title">Contact Information</p>
+
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fas fa-phone"></i></div>
+          <a href="tel:<%= settings.phone || '+19177189718' %>"><%= settings.phone || '+1 (917) 718-9718' %></a>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fas fa-envelope"></i></div>
+          <a href="mailto:<%= settings.email || 'info@trustformation.net' %>"><%= settings.email || 'info@trustformation.net' %></a>
+        </div>
+
+        <% if (settings.address) { %>
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fas fa-location-dot"></i></div>
+          <span><%= settings.address %></span>
+        </div>
+        <% } %>
+
+        <% if (settings.facebook_url) { %>
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fab fa-facebook-f"></i></div>
+          <a href="<%= settings.facebook_url %>" target="_blank" rel="noopener">Facebook Page</a>
+        </div>
+        <% } %>
+
+        <% if (settings.whatsapp_url) { %>
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fab fa-whatsapp"></i></div>
+          <a href="<%= settings.whatsapp_url %>" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+        <% } %>
+
+        <% if (settings.linkedin_url) { %>
+        <div class="contact-item">
+          <div class="contact-item-icon"><i class="fab fa-linkedin-in"></i></div>
+          <a href="<%= settings.linkedin_url %>" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <% } %>
+      </div>
+
+      <form class="contact-form" action="/contact" method="POST" data-animate="fade-right" data-delay="5">
+        <% if (typeof query !== 'undefined' && query && query.submitted) { %>
+          <div class="form-success">
+            <i class="fas fa-check-circle"></i> Message sent successfully! We'll get back to you soon.
+          </div>
+        <% } %>
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="tel" name="phone" placeholder="Phone Number (Optional)">
+        <select name="service_interest">
+          <option value="">Select Service of Interest</option>
+          <option value="USA LLC Formation">USA Company Formation (LLC)</option>
+          <option value="UK Ltd Registration">UK Company Registration (Ltd)</option>
+          <option value="Canada Company Formation">Canada Company Formation</option>
+          <option value="Bangladesh Company Registration">Bangladesh Company Registration</option>
+          <option value="E-Trade License">E-Trade License</option>
+          <option value="Audit Support">Audit Support</option>
+          <option value="Apostille & Attestation">Apostille & Attestation Services</option>
+          <option value="Notary & Translation">Notary & Translation Services</option>
+          <option value="Other">Other</option>
+        </select>
+        <textarea name="message" placeholder="Tell us about your business needs..." rows="4" required></textarea>
+        <button type="submit" class="btn btn-accent">
+          Send Message <i class="fas fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

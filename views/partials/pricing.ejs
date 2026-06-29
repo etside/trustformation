@@ -1,0 +1,55 @@
+<section id="pricing" class="pricing-section section">
+  <div class="container">
+    <div style="text-align:center;" data-animate="fade-up">
+      <span class="section-label">Pricing</span>
+      <h2 class="section-title">Choose Your <span class="highlight">Package</span></h2>
+      <p class="section-subtitle" style="margin:0 auto;">Transparent pricing with no hidden fees. Select the country and package that fits your needs.</p>
+    </div>
+
+    <div class="pricing-tabs" data-animate="fade-up" data-delay="2">
+      <button class="pricing-tab active" data-country="USA">🇺🇸 USA</button>
+      <button class="pricing-tab" data-country="UK">🇬🇧 UK</button>
+      <button class="pricing-tab" data-country="Canada">🇨🇦 Canada</button>
+      <button class="pricing-tab" data-country="Bangladesh">🇧🇩 Bangladesh</button>
+    </div>
+
+    <% if (pricingPackages && pricingPackages.length > 0) { %>
+      <div class="pricing-grid" id="pricingGrid">
+        <% pricingPackages.forEach(function(pkg) { %>
+          <div class="pricing-card <%= pkg.is_popular ? 'popular' : '' %>" data-country="<%= pkg.country %>" data-animate="fade-up" data-delay="3">
+            <div class="pricing-tier"><%= pkg.tier %></div>
+            <div class="pricing-name"><%= pkg.name %></div>
+            <div class="pricing-tagline"><%= pkg.tagline %></div>
+            <div class="pricing-price">
+              <span class="pricing-amount"><%= pkg.price %></span>
+              <% if (pkg.original_price) { %>
+                <span class="pricing-original"><%= pkg.original_price %></span>
+              <% } %>
+            </div>
+            <span class="pricing-currency">+ state/government fees</span>
+            <ul class="pricing-features">
+              <% try { JSON.parse(pkg.features).forEach(function(f) { %>
+                <li><i class="fas fa-check"></i> <%= f %></li>
+              <% }); } catch(e) { %>
+                <li><i class="fas fa-check"></i> <%= pkg.features %></li>
+              <% } %>
+            </ul>
+            <a href="#contact" class="btn btn-accent">Select Package</a>
+          </div>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <p style="text-align:center;color:var(--text-muted);margin-top:2rem;">Pricing packages coming soon. Contact us for a custom quote.</p>
+    <% } %>
+
+    <div style="text-align:center;margin-top:3rem;" data-animate="fade-up">
+      <p style="color:var(--text-secondary);font-size:0.95rem;">Need a custom solution? <a href="#contact" style="color:var(--accent);text-decoration:none;font-weight:600;">Book a Free Consultation</a></p>
+      <div style="display:flex;justify-content:center;gap:2rem;margin-top:1rem;flex-wrap:wrap;">
+        <span style="color:var(--text-muted);font-size:0.82rem;"><i class="fas fa-lock" style="color:var(--accent);margin-right:0.3rem;"></i> Secure Payment</span>
+        <span style="color:var(--text-muted);font-size:0.82rem;"><i class="fas fa-shield-halved" style="color:var(--accent);margin-right:0.3rem;"></i> Data Protection</span>
+        <span style="color:var(--text-muted);font-size:0.82rem;"><i class="fas fa-bolt" style="color:var(--accent);margin-right:0.3rem;"></i> Instant Confirmation</span>
+        <span style="color:var(--text-muted);font-size:0.82rem;"><i class="fas fa-eye-slash" style="color:var(--accent);margin-right:0.3rem;"></i> No Hidden Fees</span>
+      </div>
+    </div>
+  </div>
+</section>

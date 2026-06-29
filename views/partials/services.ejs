@@ -1,0 +1,34 @@
+<section id="services" class="services-section">
+  <div class="container">
+    <div class="services-header" data-animate="fade-up">
+      <div>
+        <span class="section-label">What We Offer</span>
+        <h2 class="section-title">Our <span class="highlight">Services</span></h2>
+      </div>
+      <p class="section-subtitle">
+        <%= settings.services_desc || 'Comprehensive business formation and compliance solutions worldwide. We handle everything from registration to ongoing support.' %>
+      </p>
+    </div>
+
+    <div class="services-grid" data-animate="fade-up" data-delay="2">
+      <% services.forEach(function(s, i) { %>
+        <div class="service-card" data-animate="fade-up" data-delay="<%= Math.min(i + 1, 10) %>">
+          <div class="service-card-top">
+            <div class="service-icon">
+              <% if (s.flag) { %>
+                <span class="service-flag"><%= s.flag %></span>
+              <% } else { %>
+                <i class="fas <%= s.icon %>"></i>
+              <% } %>
+            </div>
+            <div class="service-arrow">
+              <i class="fas fa-arrow-up-right"></i>
+            </div>
+          </div>
+          <h3 class="service-title"><%= s.title %></h3>
+          <p class="service-desc"><%= s.description %></p>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
